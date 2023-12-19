@@ -1,9 +1,18 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
 
-module.exports = router;
+module.exports = function (db){
+    const User = db.collection('users')
+    
+    router.get('/', async function(req,res,next){
+      try {
+        const params = {}
+        const users = await User.find(params).toArray()
+        res.json(users)
+      } catch (error) {
+        
+      }
+    })
+    return router;
+};
