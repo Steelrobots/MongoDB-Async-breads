@@ -20,26 +20,12 @@ module.exports = function (db) {
       const total = await User.count(params)
       const pages = Math.ceil(total / limit)
 
-      const users = await User.find(params).sort(sort).limit(limit).skip(offset).toArray()
-      res.json({ data: users, limit, page, pages, offset, total })
+      const users = await User.find(params).sort(sort).limit(Number(limit)).skip(offset).toArray()
+      res.json({ data: users, limit: Number(limit), page, pages, offset, total })
     } catch (err) {
       res.status(500).json(err)
     }
   })
-
-  // router.get('/:id', async function (req, res) {
-  //   try {
-  //     const { id } = req.params.id
-  //     console.log(id)
-  //     const user = await User.findOne({ _id: id })
-  //     console.log(user)
-  //     res.json(user)
-  //   } catch (error) {
-  //     res.status(500).json(error)
-
-  //   }
-
-  // })
 
   router.post('/', async function (req, res) {
     try {
@@ -54,14 +40,22 @@ module.exports = function (db) {
   router.put('/:id', async function (req, res) {
     try {
       const { name, phone } = req.body
-      const id = new ObjectId(req.params.id)
+      const id = req.params.id
       // const user = await User.findOne({ _id: id })
-      const updatedUser = await User.findOneAndUpdate({ _id: id }, { name, phone })
+      const updatedUser = await User.findOneAndUpdate({ _id: new ObjectId(id) }, {$set: { name: name, phone: phone }})
       res.json(updatedUser)
 
     } catch (error) {
-
-      res.status(500).json({ error : error.message })
+      res.status(500).json({ error: error.message })
+    }
+  })
+  router.delete('/:id', async function(req,res){
+    try {
+      const id = req.params.id
+      const user = await User.findOneAndDelete({_id: new ObjectId(id)})
+      res.json(user)
+    } catch (error) {
+      res.status(500).json({ error: error.message })
     }
   })
   return router;
