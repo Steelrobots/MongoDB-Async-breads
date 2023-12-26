@@ -41,7 +41,6 @@ module.exports = function (db) {
     try {
       const { name, phone } = req.body
       const id = req.params.id
-      // const user = await User.findOne({ _id: id })
       const updatedUser = await User.findOneAndUpdate({ _id: new ObjectId(id) }, {$set: { name: name, phone: phone }})
       res.json(updatedUser)
 
