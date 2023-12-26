@@ -44,7 +44,7 @@ module.exports = function (db) {
         try {
             const { title, executor } = req.body
             const user = await User.findOne({ _id: new ObjectId(executor) })
-            const date = new Date(Date.now() + 24 * 60 * 60 * 1000)
+            const date =new Date(Date.now() + 31 * 60 * 60 * 1000)
             const todo = await Todo.insertOne({ title: title, complete: false, deadline: date, executor: user._id })
             res.status(201).json(todo)
         } catch (error) {
