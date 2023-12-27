@@ -24,7 +24,7 @@ async function main() {
 main()
   .then((db) => {
 
-    // var indexRouter = require('./routes/index')(db); //immediately call
+    var indexRouter = require('./routes/index')(db); 
     var usersRouter = require('./routes/users')(db);
     var todosRouter = require('./routes/todos')(db);
 
@@ -39,7 +39,7 @@ main()
     app.use(cookieParser());
     app.use(express.static(path.join(__dirname, 'public')));
 
-    // app.use('/', indexRouter);
+    app.use('/', indexRouter);
     app.use('/api/users', usersRouter);
     app.use('/api/todos', todosRouter);
 

@@ -6,7 +6,63 @@ body {
 a {
   color: #00B7FF;
 }
-borderline {
+
+.usercontainer {
+  margin: auto;
+  margin-top: 10px;
+  background-color: whitesmoke;
+  width: 80%;
+  border-radius: 5px;
+  box-shadow: 0px 0px 2px rgb(167, 167, 167);
+  padding: 0px;
   border: 1px solid #f2f2f2;
   border-radius: 8px;
+}
+
+.head {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #F6F7F8;
+}
+
+.search {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.showentries {
+  padding: 10px;
+  margin: 0px;
+  height: 60px;
+}
+
+.entriesfind {
+  /* margin-right: 10px; */
+  width: 86%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 60px;
+}
+
+.input-search {
+  width: 100%;
+  border: 1px solid #757d85;
+  border-radius: 7px;
+  height: 60%;
+  padding: 10px;
+
+}
+
+.button-search {
+  margin-left: -3.3px;
+  margin-right: 10px;
+  display: inline-flex;
+  height: 60%;
+  justify-content: end;
 }
