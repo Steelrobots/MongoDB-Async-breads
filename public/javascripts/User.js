@@ -1,5 +1,18 @@
 //variable
-let id = null, conditional = null, page = 1, query = '', limit = 5, sortBy = '_id', sortMode = 'desc'
+let id = null, page = 1, query = '', limit = 5, sortBy = '_id', sortMode = 'desc'
+
+const formModal = new bootstrap.Modal(document.getElementById('formData'), {
+    keyboard: false
+});
+const deleteModal = new bootstrap.Modal(document.getElementById('deleteData'), {
+    keyboard: false
+});
+
+function formSubmit(e){
+    e.preventDefault()
+    addData()
+}
+
 
 async function loadData() {
     try {
@@ -36,3 +49,23 @@ async function loadData() {
 }
 
 loadData()
+
+async function addData(){
+    try {
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+
+        const response = await fetch(`http://localhost:3000/api/users`,{
+            method: "POST", 
+            headers:{
+                "Content-Type":"application/json",
+            },
+            body: JSON.stringify({name,phone}),
+        });
+        const {data} = await response.json()
+        loadData()
+        formModal.hide()
+    } catch (error) {
+        console.log('ngebug', error)
+    }
+}
