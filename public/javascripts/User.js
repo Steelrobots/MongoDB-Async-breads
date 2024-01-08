@@ -1,5 +1,10 @@
 //variable
-let userId = null, page = 1, query = '', limit = 5, sortBy = '_id', sortMode = 'desc'
+let userId = null,
+    page = 1,
+    query = '',
+    limit = 5,
+    sortBy = '_id',
+    sortMode = 'desc'
 
 const formModal = new bootstrap.Modal(document.getElementById('formData'), {
     keyboard: false
@@ -28,6 +33,27 @@ function showDelete(_id) {
     userId = _id
 }
 
+const setLimit = () => {
+    limit = document.getElementById('limit').value
+    page = 1
+    loadData()
+}
+
+const search = () => {
+    query = document.getElementById('input-search').value;
+    loadData()
+}
+
+const reset = () => {
+    document.getElementById('input-search').value = ''
+    query = ''
+    loadData()
+}
+
+const changePage = (numb) => {
+    page = numb
+    loadData(page)
+}
 
 
 async function loadData() {
@@ -36,6 +62,8 @@ async function loadData() {
         const users = await response.json();
         const offset = users.offset
         let html = ''
+        let pagination = ''
+        let pageNumber = ''
         users.data.forEach((item, index) => {
             html += `<tr>
             <td>
@@ -55,6 +83,29 @@ async function loadData() {
             </td>
           
           </tr>`
+
+            for (let i = 1; i <= users.pages; i++) {
+                pageNumber += `<a class="page-link ${page == i ? ' active' : ''} " ${users.pages == 1 ? `style =border-radius:4px;` : ''} ${i == 1 && page == i ? `style="border-top-left-radius:4px; border-bottom-left-radius:5px;"` : ''}  ${i == users.pages && page == i ? `style="border-top-right-radius:4px; border-bottom-right-radius:5px;"` : ''} id="button-pagination" onclick="changePage(${i})">${i}</a>`
+            }
+
+            if (document.getElementById('limit').value = 0) {
+                pagination += `
+                <span class="mx-2 mt-1">Showing ${users.offset + 1} to ${users.total} of ${users.total} entries </span>
+                <div class="page">
+                <a class="page-link active" id="button-pagination">1</a>
+                </div>
+                `
+            } else {
+                pagination += `
+            <span class="showPage">Showing ${users.offset + 1} to ${(Number(limit) + Number(users.offset)) >= users.total ? Number(users.total) : Number(limit) + Number(users.offset)} of ${users.total} entries </span>
+            <div class="page">
+            ${users.page == 1 ? '' : '<a onclick="changePage(page - 1)" style="border-top-left-radius:4px; border-bottom-left-radius:4px;" class="page-link" arial-lable="back"><span arial-hidden = true">&laquo</span></a>'}
+            ${pageNumber}
+            ${users.page == users.pages ? '' : '<a onclick="changePage(page + 1)" class="page-link" style="border-top-right-radius:4px; border-bottom-right-radius:4px;" arial-lable="next"><span arial-hidden = true">&raquo</span></a>'}
+            </div>
+            `
+            }   
+
             document.getElementById('tbody').innerHTML = html
         });
     } catch (error) {
@@ -86,7 +137,7 @@ async function addData() {
     }
 }
 
-async function deleteData(){
+async function deleteData() {
     try {
         const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
             method: "DELETE",
@@ -98,23 +149,23 @@ async function deleteData(){
         loadData()
         deleteModal.hide()
     } catch (error) {
-         console.log('ngebug', error)
+        console.log('ngebug', error)
     }
 
 }
-async function updateData(){
+async function updateData() {
     try {
         const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({name, phone})
+            body: JSON.stringify({ name, phone })
         });
         const users = await response.json()
         loadData()
         formModal.hide()
     } catch (error) {
-         console.log('ngebug', error)
+        console.log('ngebug', error)
     }
 }
