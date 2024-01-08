@@ -1,5 +1,5 @@
 //variable
-let id = null, page = 1, query = '', limit = 5, sortBy = '_id', sortMode = 'desc'
+let userId = null, page = 1, query = '', limit = 5, sortBy = '_id', sortMode = 'desc'
 
 const formModal = new bootstrap.Modal(document.getElementById('formData'), {
     keyboard: false
@@ -8,10 +8,26 @@ const deleteModal = new bootstrap.Modal(document.getElementById('deleteData'), {
     keyboard: false
 });
 
-function formSubmit(e){
-    e.preventDefault()
-    addData()
+function showAdd() {
+    document.getElementById('submitAdd').style.display = 'block';
+    document.getElementById('submitEdit').style.display = 'none';
+    document.getElementById('name').value = ''
+    document.getElementById('phone').value = ''
+    formModal.show()
 }
+function showUpdate(_id, name, phone) {
+    document.getElementById('submitAdd').style.display = 'block';
+    document.getElementById('submitEdit').style.display = 'none';
+    document.getElementById('name').value = name
+    document.getElementById('phone').value = phone
+    userId = _id
+    formModal.show()
+}
+function showDelete(_id) {
+    deleteModal.show()
+    userId = _id
+}
+
 
 
 async function loadData() {
@@ -31,11 +47,11 @@ async function loadData() {
             <td>
               ${item.phone}
             </td>
-            <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editData"><i
+            <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editData" onclick="showUpdate('${item._id}', '${item.name}', '${item.phone}')"><i
                   class="fa-solid fa-pencil"></i></button>&nbsp;
-              <button class="btn btn-danger" onclick="" data-bs-toggle="modal" data-bs-target="#deleteData"><i
-                  class="fa-solid fa-trash"></i></button>&nbsp;
-                  <a href="/users/${item.id}/todos" class="btn btn-warning"><i class="fa-solid fa-right-to-bracket"></i></a>
+              <button class="btn btn-danger" onclick="showDelete('${item._id}')" data-bs-toggle="modal" data-bs-target="#deleteData"><i
+                  class="fa-solid fa-trash" data-bs-toggle="modal"></i></button>&nbsp;
+                  <a href="/users/${item._id}/todos" class="btn btn-warning"><i class="fa-solid fa-right-to-bracket"></i></a>
             </td>
           
           </tr>`
@@ -50,22 +66,55 @@ async function loadData() {
 
 loadData()
 
-async function addData(){
+async function addData() {
     try {
         const name = document.getElementById('name').value;
         const phone = document.getElementById('phone').value;
 
-        const response = await fetch(`http://localhost:3000/api/users`,{
-            method: "POST", 
-            headers:{
-                "Content-Type":"application/json",
+        const response = await fetch(`http://localhost:3000/api/users`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({name,phone}),
+            body: JSON.stringify({ name, phone }),
         });
-        const {data} = await response.json()
+        const { data } = await response.json()
         loadData()
         formModal.hide()
     } catch (error) {
         console.log('ngebug', error)
+    }
+}
+
+async function deleteData(){
+    try {
+        const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+        const users = await response.json()
+        loadData()
+        deleteModal.hide()
+    } catch (error) {
+         console.log('ngebug', error)
+    }
+
+}
+async function updateData(){
+    try {
+        const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({name, phone})
+        });
+        const users = await response.json()
+        loadData()
+        formModal.hide()
+    } catch (error) {
+         console.log('ngebug', error)
     }
 }

@@ -59,7 +59,7 @@
   </table>
   <div class="footer">
     <div>
-      <a class="btn btn-primary" id="addButton" data-bs-toggle="modal" data-bs-target="#formData"><i
+      <a class="btn btn-primary" id="addButton" data-bs-toggle="modal" data-bs-target="#formData" onclick="showAdd()"><i
           class="fa-solid fa-plus"></i></a>
     </div>
     <div class="paginations">
@@ -72,7 +72,7 @@
   </div>
 
   <!-- Modals -->
-  <div class="modal" id="formData" tabindex="-1">
+  <div class="modal" id="formData"  tabindex="-1" aria-labelledby="userForm" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -95,8 +95,8 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="submitAdd">Save changes</button>
-          <button type="button" class="btn btn-primary" id="submitEdit">Save changes</button>
+          <button type="button" class="btn btn-primary" id="submitAdd" onclick="addData()">Save changes</button>
+          <button type="button" class="btn btn-primary" id="submitEdit" onclick="updateData()">Save changes</button>
         </div>
       </div>
     </div>
@@ -113,8 +113,8 @@
           <p>Are you sure?</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-          <button type="button" class="btn btn-primary">Yes</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >No</button>
+          <button type="button" class="btn btn-primary" onclick="deleteData()">Yes</button>
         </div>
       </div>
     </div>
