@@ -26,7 +26,16 @@ module.exports = function (db) {
       res.status(500).json(err)
     }
   })
+  router.get('/:id', async function (req, res) {
+    try {
+      const id = req.params.id
+      const user = await User.findOne({ _id: new ObjectId(id) })
+      res.status(201).json(user)
 
+    } catch (error) {
+      res.status(500).json({ error: error.message })
+    }
+  })
   router.post('/', async function (req, res) {
     try {
       const { name, phone } = req.body
@@ -41,17 +50,17 @@ module.exports = function (db) {
     try {
       const { name, phone } = req.body
       const id = req.params.id
-      const updatedUser = await User.findOneAndUpdate({ _id: new ObjectId(id) }, {$set: { name: name, phone: phone }})
+      const updatedUser = await User.findOneAndUpdate({ _id: new ObjectId(id) }, { $set: { name: name, phone: phone } })
       res.json(updatedUser)
 
     } catch (error) {
       res.status(500).json({ error: error.message })
     }
   })
-  router.delete('/:id', async function(req,res){
+  router.delete('/:id', async function (req, res) {
     try {
       const id = req.params.id
-      const user = await User.findOneAndDelete({_id: new ObjectId(id)})
+      const user = await User.findOneAndDelete({ _id: new ObjectId(id) })
       res.json(user)
     } catch (error) {
       res.status(500).json({ error: error.message })

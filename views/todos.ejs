@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MongoDB BREADS(Browse,Read,Edit,Add,Delete)</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+
+    <script>
+        let executorId = '<%=executor%>'
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Todo List</h1>
+
+        <form action="" method="get">
+            <div class="inside">
+                <div class="inline">
+                    <label for="title" class="col-sm-2 col-form-label">Title</label>
+                    <div class="contain-input"><input type="text" id="inputTitle" name="title"
+                            placeholder="insert your title" ">
+                    </div>
+                </div>
+                <div class=" rowbirth"><label for="deadline">Deadline</label>
+                        <div class="birthdate">
+                            <input type="date" id="strDate" name="strDate">
+                            <p>s.d</p>
+                            <input type="date" id="endDate" name="endDate">
+                        </div>
+                    </div>
+                    <div class="rowcomplete"><label for="complete">Complete</label>
+                        <select name="complete" id="complete">
+                            <option value="">-select complete-</option>
+                            <option value="false">Not Yet</option>
+                            <option value="true">Done</option>
+                        </select>
+                    </div>
+
+                    <div class="findcluster">
+                        <div class="sortData" id="changeSort">
+                            <button class="btn btn-danger"><i class="fa-solid fa-sort"></i>sort by deadline</button>
+                        </div>
+                        <div class="search-button">
+                            <button type="submit" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button>
+                            <a href="/users" class="btn btn-info"><i class="fa fa-search"></i></a>
+                        </div>
+                    </div>
+                </div>
+        </form>
+        <div class="addTodo">
+            <input type="text" name="title" id="title" placeholder="title">
+            <button class="btn btn-primary"><i class="fa-sharp fa-solid fa-circle-down"></i></button>
+        </div>
+    </div>
+</body>
+<script src="javascripts/bootstrap.bundle.min.js"></script>
+<script src="javascripts/Todo.js"></script>
+
+</html>

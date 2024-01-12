@@ -41,6 +41,7 @@ const setLimit = () => {
 
 const search = () => {
     query = document.getElementById('input-search').value;
+    page = 1
     loadData()
 }
 

@@ -44,6 +44,16 @@ module.exports = function (db) {
             res.status(500).json(err)
         }
     })
+    router.get('/:id', async function (req, res) {
+        try {
+            const id = req.params.id
+            const todo = await Todo.findOne({ _id: new ObjectId(id) })
+            res.status(201).json(todo)
+
+        } catch (error) {
+            res.status(500).json({ error: error.message })
+        }
+    })
     router.post('/', async function (req, res) {
         try {
             const { title, executor } = req.body
