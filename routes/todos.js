@@ -1,6 +1,6 @@
 const express = require('express');
 var router = express.Router();
-const { ObjectId } = require('mongodb')
+const { ObjectId } = require('mongodb');
 
 
 module.exports = function (db) {
@@ -60,7 +60,8 @@ module.exports = function (db) {
             const user = await User.findOne({ _id: new ObjectId(executor) })
             const date = new Date(Date.now() + 24 * 60 * 60 * 1000)
             const todo = await Todo.insertOne({ title: title, complete: false, deadline: date, executor: user._id })
-            res.status(201).json(todo)
+            const data = await Todo.find({ _id: new ObjectId(todo.insertedId) }).toArray()
+            res.status(201).json(data)
         } catch (error) {
             res.status(500).json({ error: error.message })
 

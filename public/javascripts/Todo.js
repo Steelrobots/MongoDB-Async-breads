@@ -18,7 +18,7 @@ $(window).scroll(function () {
 })
 
 const search = () => {
-    title = $('#title').val()
+    title = $('#inputTitle').val()
     startDeadline = $('#startDeadline').val()
     endDeadline = $('#endDeadline').val()
     if ($('#complete').val()) complete = $('#complete').val()
@@ -108,7 +108,7 @@ const loadData = async () => {
             <div id="${item._id}" class="todoslist ${item.complete == false && new Date(`${item.deadline}`).getTime() < new Date().getTime() ? ' alert alert-danger' : item.complete == true ? ' alert alert-success' : ' alert alert-secondary'}" role="alert">
                  ${moment(item.deadline).format('DD-MM-YYYY HH:mm')} ${item.title}
                  <div>
-                    <a type="button" onclick="modalUpdate("${item._id}", "${item.title}", "${item.deadline}", "${item.complete}")" data-bs-toggle="modal" data-bs-target="#formTodo" ><i class="fa-solid fa-pencil"></i></a>
+                    <a type="button" onclick="getData("${item._id}", "${item.title}", "${item.deadline}", "${item.complete}")" data-bs-toggle="modal" data-bs-target="#formTodo" ><i class="fa-solid fa-pencil"></i></a>
                     <a type="button" onclick="getId('${item._id}')"  data-bs-toggle="modal" data-bs-target="#deleteTodo"><i class="fa-solid fa-trash mx-2"></i></a>
                  </div>    
                 </div>`
@@ -153,7 +153,7 @@ const addTodo = async () => {
         $('#title').val('')
 
     } catch (error) {
-        throw error.message
+        console.log(error.message)
     }
 }
 
