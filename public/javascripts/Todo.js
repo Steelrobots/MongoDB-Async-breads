@@ -1,11 +1,11 @@
 let title = '', page = 1, complete = '', startDeadline = '', endDeadline = '', sortBy = '_id', sortMode = 'desc', limit = 10, executor = executorid, deadline = null, todoId = null, id = null;
 
 
-// const formModal = new bootstrap.Modal($('#formTodo'), {
-//     keyboard: false
-// });
+
+
 function getId(_id) {
     todoId = _id
+    console.log(todoId)
 }
 
 
@@ -65,17 +65,18 @@ const sortDesc = (deadline) => {
 }
 
 const getData = async (_id) => {
+    console.log('jalaan')
     try {
         getId(_id)
         const response = await $.ajax({
-            url: `/api/todos/${_id}`,
+            url: `/api/todos/${todoId}`,
             method: "GET",
             dataType: "json",
         });
-        console.log(response)
-        $('#title').val(response.title)
-        $('#deadline').val(moment(response.deadline).format('YYYY-MM-DDThh:mm'))
-        $('#complete').prop('checked', response.complete)
+        console.log(response.title, response.deadline, response.complete)
+        $('#editTitle').val(response.title)
+        $('#editDeadline').val(moment(response.deadline).format('YYYY-MM-DDThh:mm'))
+        $('#editComplete').prop('checked', response.complete)
     } catch (err) {
         throw err
     }
@@ -108,7 +109,7 @@ const loadData = async () => {
             <div id="${item._id}" class="todoslist ${item.complete == false && new Date(`${item.deadline}`).getTime() < new Date().getTime() ? ' alert alert-danger' : item.complete == true ? ' alert alert-success' : ' alert alert-secondary'}" role="alert">
                  ${moment(item.deadline).format('DD-MM-YYYY HH:mm')} ${item.title}
                  <div>
-                    <a type="button" onclick="getData("${item._id}", "${item.title}", "${item.deadline}", "${item.complete}")" data-bs-toggle="modal" data-bs-target="#formTodo" ><i class="fa-solid fa-pencil"></i></a>
+                    <a type="button" onclick="getData('${item._id}')" data-bs-toggle="modal" data-bs-target="#formTodo" ><i class="fa-solid fa-pencil"></i></a>
                     <a type="button" onclick="getId('${item._id}')"  data-bs-toggle="modal" data-bs-target="#deleteTodo"><i class="fa-solid fa-trash mx-2"></i></a>
                  </div>    
                 </div>`
@@ -159,9 +160,10 @@ const addTodo = async () => {
 
 const updateTodo = async () => {
     try {
-        let title = $('#title').val()
-        let deadline = $('#deadline').val()
-        let complete = $('#complete').prop('checked')
+        console.log('update jalan')
+        let title = $('#editTitle').val()
+        let deadline = $('#editDeadline').val()
+        let complete = $('#editComplete').prop('checked')
         const response = await $.ajax({
             url: `/api/todos/${todoId}`,
             method: "PUT",
@@ -188,8 +190,8 @@ const updateTodo = async () => {
         } else {
             complete = ''
         }
+        console.log(editList)
         loadData()
-        formModal.hide()
     } catch (error) {
         console.log('ngebug', error.message)
     }

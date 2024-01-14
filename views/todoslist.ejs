@@ -86,27 +86,27 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="form-user">
                         <div class="row mb-3">
                             <label for="title" class="col-sm-2 col-form-label">Title</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="title" required>
+                                <input type="title" class="form-control" id="editTitle" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="deadline" class="col-sm-2 col-form-label">Deadline</label>
                             <div class="col-sm-10">
-                                <input type="datetime-local" placeholder="DD MM YYYY" class="form-control" id="deadline"
-                                    required>
+                                <input type="datetime-local" class="form-control" name="deadline" id="editDeadline"
+                                    required />
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="deadline" class="col-sm-2 col-form-label">Deadline</label>
+                            <label for="complete" class="col-sm-2 col-form-label">Complete</label>
                             <div class="col-sm-10">
-                                <div class="form-check pt-2">
-                                    <input class="form-check-input" type="checkbox" id="complete">
-                                    <label class="form-check-label" for="complete">
-                                        Done
+                                <div class="form-check my-2">
+                                    <input class="form-check-input" type="checkbox" id="editComplete">
+                                    <label class="form-check-label" for="editComplete">
+                                        done
                                     </label>
                                 </div>
                             </div>
