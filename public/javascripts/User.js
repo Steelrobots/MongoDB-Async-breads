@@ -107,6 +107,7 @@ async function loadData() {
     try {
         const response = await fetch(`http://localhost:3000/api/users?query=${query}&page=${page}&limit=${limit}&sortBy=${sortBy}&sortMode=${sortMode}`);
         const users = await response.json();
+        console.log(users)
         const offset = users.offset
         let html = ''
         let pagination = ''

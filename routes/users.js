@@ -19,6 +19,7 @@ module.exports = function (db) {
       }
       const total = await User.count(params)
       const pages = Math.ceil(total / limit)
+      console.log(total)
 
       const users = await User.find(params).sort(sort).limit(Number(limit)).skip(offset).toArray()
       res.json({ data: users, limit: Number(limit), page, pages, offset, total })

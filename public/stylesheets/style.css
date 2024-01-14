@@ -6,7 +6,10 @@ body {
 a {
   color: #00B7FF;
 }
-
+h1 {
+  text-align: center;
+  padding: 10px;
+}
 .usercontainer {
   margin: auto;
   margin-top: 10px;
@@ -104,7 +107,7 @@ a {
   cursor: pointer;
 }
 
-.cotainer{
+.container{
   margin: auto;
   margin-top: 10px;
   background-color: whitesmoke;
@@ -114,4 +117,129 @@ a {
   padding: 0px;
   border: 1px solid #f2f2f2;
   border-radius: 8px;
+}
+.inside {
+  background-color: white;
+  padding: 5px 15px;
+}
+
+.inline {
+  display: flex;
+  width: 100%;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+.contain-input {
+  float: right;
+  width: 90%;
+  resize: vertical;
+  margin-left: 43px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  font-size: medium;
+  border-radius: 8px;
+  border-style: solid;
+  border-color: whitesmoke;
+}
+.deadline {
+  box-sizing: border-box;
+  display: block;
+  margin-top: 10px;
+  padding-right: 5px;
+  width: 100%;
+
+}
+
+.deadline label {
+  float: left;
+  width: 18%;
+  display: block;
+  margin-top: 5px;
+  padding-left: 5px;
+}
+
+.deadline input,
+.deadline p {
+  display: inline-block
+}
+
+.dlDate {
+  box-sizing: border-box;
+  display: inline-block;
+  padding-left: 30px;
+  width: 82%;
+}
+
+.dlDate input {
+  width: 40%;
+}
+
+
+.dlDate p {
+  text-align: center;
+  padding: 0px;
+  width: 20%;
+  margin-top: 16px;
+}
+
+.dlDate :first-child {
+  float: left;
+  margin-top: 4px;
+}
+
+.dlDate :last-child {
+  float: right;
+  margin-top: 4px;
+}
+.rowcomplete {
+  box-sizing: border-box;
+  padding: 0px 5px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+
+.rowcomplete select {
+  float: right;
+  width: 80%;
+  border: 2px solid whitesmoke;
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: medium;
+}
+.findcluster{
+  display: flex;
+    margin-top: 15px;
+}
+.search-button{
+  margin-left: 8.2%;
+}
+.addTodo{
+  border-top: 1px solid #ddd;
+  background-color: #f8f8f8;
+  padding: 10px;
+}
+.addTodo input{
+  height: 37px;
+  margin-top: 5px;
+  width: 95.5%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+.addTodo button{
+  margin-top: -4px;
+}
+#todos-list{
+  background-color: #f2f2f2;
+}
+.todoslist {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
 }
