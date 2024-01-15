@@ -37,6 +37,8 @@ module.exports = function (db) {
             }
             const total = await Todo.count(params)
             const pages = Math.ceil(total / limit)
+            console.log(params)
+            
 
             const todos = await Todo.find(params).sort(sort).limit(Number(limit)).skip(offset).toArray()
             res.json({ data: todos, limit: Number(limit), page, pages, total })

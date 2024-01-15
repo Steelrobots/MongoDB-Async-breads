@@ -1,4 +1,4 @@
-let title = '', page = 1, complete = '', startDeadline = '', endDeadline = '', sortBy = '_id', sortMode = 'desc', limit = 10, executor = executorid, deadline = null, todoId = null, id = null;
+let title = '', page = 1, complete = '', startDeadline = '', endDeadline = '', sortBy = '_id', sortMode = 'desc', limit = 10, executor = executorid, deadline = null, todoId = null, id = null, complt = false;
 
 
 
@@ -13,17 +13,19 @@ function getId(_id) {
 $(window).scroll(function () {
     if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
         page++
-        loadData()
+        loadData(complt)
     }
 })
 
 const search = () => {
+    console.log("jalan")
+    page = 1
     title = $('#inputTitle').val()
     startDeadline = $('#startDeadline').val()
     endDeadline = $('#endDeadline').val()
     if ($('#complete').val()) complete = $('#complete').val()
     else complete = ''
-    loadData()
+    loadData(!complt)
 
 }
 const reset = () => {
@@ -31,7 +33,7 @@ const reset = () => {
     startDeadline = ''
     endDeadline = ''
     complete = ''
-    $('#searchTitle').val('')
+    $('#inputTitle').val('')
     $('#startDeadline').val('')
     $('#endDeadline').val('')
     $('#complete').val('')
@@ -42,7 +44,7 @@ const reset = () => {
     <button class="btn btn-success" onclick="sortDesc('deadline')"><i class="fa-solid fa-sort"></i> sort by deadline</button>
     `
     $('#changeSort').html(defaultMode)
-    loadData()
+    loadData(!complt)
 }
 
 const sortAsc = (deadline) => {
@@ -52,7 +54,7 @@ const sortAsc = (deadline) => {
     let ascMode = `
     <button class="btn btn-success" onclick="sortDesc('deadline')"><i class="fa-solid fa-sort-down"></i> sort by deadline</button>`
     $('#changeSort').html(ascMode)
-    loadData()
+    loadData(!complt)
 }
 const sortDesc = (deadline) => {
     page = 1
@@ -61,7 +63,7 @@ const sortDesc = (deadline) => {
     let descMode = `
     <button class="btn btn-success" onclick="sortAsc('deadline')"><i class="fa-solid fa-sort-up"></i> sort by deadline</button>`
     $('#changeSort').html(descMode)
-    loadData()
+    loadData(!complt)
 }
 
 const getData = async (_id) => {
@@ -80,7 +82,7 @@ const getData = async (_id) => {
     } catch (err) {
         throw err
     }
-    loadData()
+    loadData(complt)
 }
 
 const loadData = async () => {
@@ -125,7 +127,7 @@ const loadData = async () => {
 
     }
 }
-loadData()
+loadData(complt)
 
 const addTodo = async () => {
     try {
@@ -191,7 +193,7 @@ const updateTodo = async () => {
             complete = ''
         }
         console.log(editList)
-        loadData()
+        loadData(complt)
     } catch (error) {
         console.log('ngebug', error.message)
     }
@@ -208,5 +210,5 @@ const deleteTodo = async () => {
     } catch (error) {
         console.log('ngebug', error.message)
     }
-    loadData()
+    loadData(complt)
 }

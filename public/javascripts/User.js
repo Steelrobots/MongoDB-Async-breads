@@ -21,8 +21,8 @@ function showAdd() {
     formModal.show()
 }
 function showUpdate(_id, name, phone) {
-    document.getElementById('submitAdd').style.display = 'block';
-    document.getElementById('submitEdit').style.display = 'none';
+    document.getElementById('submitAdd').style.display = 'none';
+    document.getElementById('submitEdit').style.display = 'block';
     document.getElementById('name').value = name
     document.getElementById('phone').value = phone
     userId = _id
@@ -47,6 +47,9 @@ const search = () => {
 
 const reset = () => {
     document.getElementById('input-search').value = ''
+    limit = document.getElementById('limit').value = "5"
+    sortBy = '_id'
+    sortMode = 'desc'
     query = ''
     loadData()
 }
@@ -132,20 +135,20 @@ async function loadData() {
           
           </tr>`
         });
-            for (let i = 1; i <= users.pages; i++) {
-                pageNumber += `<a class="page-link ${page == i ? ' active' : ''} " ${users.pages == 1 ? `style =border-radius:4px;` : ''} ${i == 1 && page == i ? `style="border-top-left-radius:4px; border-bottom-left-radius:5px;"` : ''}  ${i == users.pages && page == i ? `style="border-top-right-radius:4px; border-bottom-right-radius:5px;"` : ''} id="button-pagination" onclick="changePage(${i})">${i}</a>`
-                
-            }
+        for (let i = 1; i <= users.pages; i++) {
+            pageNumber += `<a class="page-link ${page == i ? ' active' : ''} " ${users.pages == 1 ? `style =border-radius:4px;` : ''} ${i == 1 && page == i ? `style="border-top-left-radius:4px; border-bottom-left-radius:5px;"` : ''}  ${i == users.pages && page == i ? `style="border-top-right-radius:4px; border-bottom-right-radius:5px;"` : ''} id="button-pagination" onclick="changePage(${i})">${i}</a>`
 
-            if (document.getElementById('limit').value == 0) {
-                pagination += `
-        <span class="mx-2 mt-1">Showing ${users.offset + 1} to ${users.total} of ${users.total} entries </span>
+        }
+
+        if (document.getElementById('limit').value == 0) {
+            pagination += `
+        <span class="showPage">Showing ${users.offset + 1} to ${users.total} of ${users.total} entries </span>
         <div class="page">
-        <a class="page-link active" id="button-pagination">1</a>
+        <a class="page-link active" style="border-radius:6px" id="button-pagination">1</a>
         </div>
         `
-            } else {
-                pagination = `
+        } else {
+            pagination = `
         <span class="showPage">Showing ${users.offset + 1} to ${(Number(limit) + Number(users.offset)) >= users.total ? Number(users.total) : Number(limit) + Number(users.offset)} of ${users.total} entries </span>
         <div class="page">
         ${users.page == 1 ? '' : '<a onclick="changePage(page - 1)" style="border-top-left-radius:4px; border-bottom-left-radius:4px;" class="page-link" arial-lable="back"><span arial-hidden = true">&laquo</span></a>'}
@@ -153,11 +156,11 @@ async function loadData() {
         ${users.page == users.pages ? '' : '<a onclick="changePage(page + 1)" class="page-link" style="border-top-right-radius:4px; border-bottom-right-radius:4px;" arial-lable="next"><span arial-hidden = true">&raquo</span></a>'}
         </div>
         `
-            }
+        }
 
-            document.getElementById('button-pagination').innerHTML = pagination
-            document.getElementById('tbody').innerHTML = html
-       
+        document.getElementById('button-pagination').innerHTML = pagination
+        document.getElementById('tbody').innerHTML = html
+
     } catch (error) {
         console.log('ngebug', error)
 
@@ -205,6 +208,8 @@ async function deleteData() {
 }
 async function updateData() {
     try {
+        let name = document.getElementById('name').value
+        let phone = document.getElementById('phone').value
         const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
             method: "PUT",
             headers: {
