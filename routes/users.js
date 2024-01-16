@@ -21,7 +21,7 @@ module.exports = function (db) {
       const pages = Math.ceil(total / limit)
       
       const users = await User.find(params).sort(sort).limit(Number(limit)).skip(offset).toArray()
-      res.json({ data: users, limit: Number(limit), page, pages, offset, total })
+      res.json({ data: users, limit: Number(limit), page : Number(page), pages, offset, total })
     } catch (err) {
       res.status(500).json(err)
     }
@@ -40,7 +40,8 @@ module.exports = function (db) {
     try {
       const { name, phone } = req.body
       const user = await User.insertOne({ name, phone })
-      res.status(200).json(user)
+      const data = await User.findOne({_id: new ObjectId(user.insertedId)})
+      res.status(200).json(data)
     } catch (error) {
       res.status(500).json(error)
     }
@@ -51,7 +52,8 @@ module.exports = function (db) {
       const { name, phone } = req.body
       const id = req.params.id
       const updatedUser = await User.findOneAndUpdate({ _id: new ObjectId(id) }, { $set: { name: name, phone: phone } })
-      res.json(updatedUser)
+      const user = await User.findOne({ _id: new ObjectId(id) })
+      res.status(201).json(user)
 
     } catch (error) {
       res.status(500).json({ error: error.message })

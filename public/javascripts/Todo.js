@@ -5,7 +5,6 @@ let title = '', page = 1, complete = '', startDeadline = '', endDeadline = '', s
 
 function getId(_id) {
     todoId = _id
-    console.log(todoId)
 }
 
 
@@ -18,7 +17,6 @@ $(window).scroll(function () {
 })
 
 const search = () => {
-    console.log("jalan")
     page = 1
     title = $('#inputTitle').val()
     startDeadline = $('#startDeadline').val()
@@ -37,6 +35,7 @@ const reset = () => {
     $('#startDeadline').val('')
     $('#endDeadline').val('')
     $('#complete').val('')
+    page = 1
 
     sortBy = '_id'
     sortMode = 'desc'
@@ -67,7 +66,6 @@ const sortDesc = (deadline) => {
 }
 
 const getData = async (_id) => {
-    console.log('jalaan')
     try {
         getId(_id)
         const response = await $.ajax({
@@ -75,7 +73,6 @@ const getData = async (_id) => {
             method: "GET",
             dataType: "json",
         });
-        console.log(response.title, response.deadline, response.complete)
         $('#editTitle').val(response.title)
         $('#editDeadline').val(moment(response.deadline).format('YYYY-MM-DDThh:mm'))
         $('#editComplete').prop('checked', response.complete)
@@ -132,7 +129,7 @@ loadData(complt)
 const addTodo = async () => {
     try {
         title = $('#title').val()
-        const a_day = 24 * 60 * 1000
+        const a_day = 24 * 60 * 60 * 1000
         const response = await $.ajax({
             url: `/api/todos`,
             method: "POST",
@@ -147,8 +144,8 @@ const addTodo = async () => {
         <div id="${response[0]._id}" class="todoslist ${response[0].complete == false && new Date(`${response[0].deadline}`).getTime() < new Date().getTime() ? ' alert alert-danger' : response[0].complete == true ? ' alert alert-success' : ' alert alert-secondary'}" role="alert">
         ${moment(new Date(Date.now() + a_day)).format('DD-MM-YYYY HH:mm')} ${title}
         <div>
-        <a type="button" onclick="modalUpdate('${response[0]._id}')" data-bs-toggle="modal" data-bs-target="#edit"><i class="fa-solid fa-pencil"></i></a>
-        <a type="button" onclick="getId('${response[0]._id}')" data-bs-toggle="modal" data-bs-target="#delete"><i class="fa-solid fa-trash mx-2"></i></a>
+        <a type="button" onclick="getData('${response[0]._id}')" data-bs-toggle="modal" data-bs-target="#formTodo"><i class="fa-solid fa-pencil"></i></a>
+        <a type="button" onclick="getId('${response[0]._id}')" data-bs-toggle="modal" data-bs-target="#deleteTodo"><i class="fa-solid fa-trash mx-2"></i></a>
         </div>
          </div>`
         $('#todos-list').prepend(addList)

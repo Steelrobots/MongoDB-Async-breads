@@ -50,7 +50,14 @@ const reset = () => {
     limit = document.getElementById('limit').value = "5"
     sortBy = '_id'
     sortMode = 'desc'
+    let defaultName = `<a onclick="sortNameAsc('name')"><i class="fa-solid fa-sort"
+    style="color: #000000;"></i></a>&nbsp;Name`
+    let defaultPhone = `<a onclick="sortPhoneAsc('phone')"><i class="fa-solid fa-sort"
+    style="color: #000000;"></i></a>&nbsp;Phone`
     query = ''
+
+    document.getElementById('sort-name').innerHTML = defaultName
+    document.getElementById('sort-phone').innerHTML = defaultPhone
     loadData()
 }
 
